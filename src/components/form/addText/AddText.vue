@@ -39,7 +39,27 @@ export default {
   },
   methods: {
     submit() {
+      const canvas = document.getElementById("canvas-div");
       const tag = document.createElement(canvas_Text_Tag);
+      const text = document.createTextNode(this.text);
+      const createDiv = document.createElement("div");
+      const createDeleteButton = document.createElement("button");
+      createDeleteButton.innerText = "X";
+      createDeleteButton.className = "btn btn-danger";
+      createDeleteButton.style.position = "absolute";
+      createDeleteButton.style.top = "-2rem";
+      createDeleteButton.style.right = "-2rem";
+      createDiv.style.top = "30%";
+      createDiv.style.left = "50%";
+      createDiv.appendChild(createDeleteButton);
+      createDiv.style.position = "absolute";
+      createDiv.style.width = "fit-content";
+      createDiv.style.minWidth = "150px";
+      createDeleteButton.onclick = function () {
+        document.getElementById(tag.id).remove();
+        localStorage.setItem("canvas", canvas.innerHTML);
+      };
+      createDiv.id = ((Date.now() / 1000) | 0) + "-text";
       tag.id = ((Date.now() / 1000) | 0) + "-text";
       tag.draggable = true;
       tag.ondragstart = function (e) {
@@ -51,11 +71,16 @@ export default {
         };
         startDrag(e, data);
       };
-      const text = document.createTextNode(this.text);
+      createDiv.onmouseover = function () {
+        tag.style.opacity = 0.4;
+      };
+      createDiv.onmouseout = function () {
+        tag.style.opacity = 1;
+      };
       tag.appendChild(text);
-      const element = document.getElementById("canvas-div");
-      element.appendChild(tag);
-
+      createDiv.appendChild(tag);
+      canvas.appendChild(createDiv);
+      localStorage.setItem("canvas", canvas.innerHTML);
       this.$refs.text.value = "";
       this.text = "";
     },
