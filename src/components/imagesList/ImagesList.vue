@@ -19,10 +19,11 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { startDrag } from "../../helper/helper";
 import { onMounted, computed } from "vue";
 import { useImagesStore } from "../../stores/images";
+
 const store = useImagesStore();
 const images = computed(() => {
   return store.images;
@@ -31,7 +32,7 @@ onMounted(() => {
   store.fetchImages();
 });
 
-function startDragCall(e) {
+function startDragCall(e: any) {
   const data = {
     type: "img",
     id: e.target.id,

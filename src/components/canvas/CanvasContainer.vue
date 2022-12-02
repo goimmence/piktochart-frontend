@@ -18,31 +18,31 @@
 }
 </style>
 
-<script setup>
+<script setup lang="ts">
 import { onMounted } from "vue";
 import { canvas_Text_Tag } from "../../config/config";
 import { startDrag } from "../../helper/helper";
 
-let tempImgId;
+let tempImgId: string = "";
 onMounted(() => {
-  const canvas = document.getElementById("canvas-div");
+  const canvas: any = document.getElementById("canvas-div");
   localStorage.getItem("canvas") &&
     (canvas.innerHTML = localStorage.getItem("canvas"));
-  canvas.childNodes?.forEach((child) => {
-    const buttonElement = document
+  canvas.childNodes?.forEach((child: HTMLElement) => {
+    const buttonElement: any = document
       ?.getElementById(child.id)
       ?.getElementsByTagName("button")?.[0];
 
-    const imgElement = document
+    const imgElement: any = document
       ?.getElementById(child.id)
       ?.getElementsByTagName("img")?.[0];
 
-    const textElement = document
+    const textElement: any = document
       ?.getElementById(child.id)
       ?.getElementsByTagName(canvas_Text_Tag)?.[0];
 
     if (imgElement) {
-      imgElement.ondragstart = function (e) {
+      imgElement.ondragstart = function (e: any) {
         const data = {
           type: "img",
           id: child.id,
@@ -57,12 +57,13 @@ onMounted(() => {
         imgElement.style.opacity = 1;
       };
       buttonElement.onclick = function () {
-        document.getElementById(child.id).remove();
+        const childElementId: any = document.getElementById(child.id);
+        childElementId.remove();
         localStorage.setItem("canvas", canvas.innerHTML);
       };
     } else if (textElement) {
-      const textElementDiv = document.getElementById(child.id);
-      textElementDiv.ondragstart = function (e) {
+      const textElementDiv: any = document.getElementById(child.id);
+      textElementDiv.ondragstart = function (e: any) {
         const data = {
           type: "text",
           id: child.id,
@@ -78,19 +79,20 @@ onMounted(() => {
         textElementDiv.style.opacity = 1;
       };
       buttonElement.onclick = function () {
-        document.getElementById(child.id).remove();
+        const childElementId: any = document.getElementById(child.id);
+        childElementId.remove();
         localStorage.setItem("canvas", canvas.innerHTML);
       };
     }
   });
 });
 
-function onDrop(evt) {
-  const getData = evt.dataTransfer.getData("data");
-  const data = getData && JSON.parse(getData);
-  const canvas = document.getElementById("canvas-div");
-  const createDiv = document.createElement("div");
-  const createDeleteButton = document.createElement("button");
+function onDrop(evt: any) {
+  const getData: any = evt.dataTransfer.getData("data");
+  const data: any = getData && JSON.parse(getData);
+  const canvas: any = document.getElementById("canvas-div");
+  const createDiv: any = document.createElement("div");
+  const createDeleteButton: any = document.createElement("button");
   createDeleteButton.innerText = "X";
   createDeleteButton.className = "btn btn-danger";
   createDeleteButton.style.position = "absolute";
@@ -106,14 +108,15 @@ function onDrop(evt) {
       imgID = tempImgId;
     }
     createDeleteButton.onclick = function () {
-      document.getElementById(imgID).remove();
+      const imgElementId: any = document.getElementById(imgID);
+      imgElementId.remove();
       localStorage.setItem("canvas", canvas.innerHTML);
     };
     createDiv.style.width = "150px";
     createDiv.style.top = evt.offsetY - 50 + "px";
     createDiv.style.left = evt.offsetX - 50 + "px";
     createDiv.id = imgID;
-    createDiv.ondragstart = function (e) {
+    createDiv.ondragstart = function (e: any) {
       const data = {
         type: "img",
         id: e.target.id,
@@ -129,7 +132,7 @@ function onDrop(evt) {
       img.style.opacity = 1;
     };
 
-    const img = document.createElement("img");
+    const img: any = document.createElement("img");
     img.src = data.src;
     img.style.width = "100px";
     img.style.height = "100px";
@@ -146,7 +149,7 @@ function onDrop(evt) {
     createDiv.style.top = evt.offsetY + "px";
     createDiv.style.left = evt.offsetX + "px";
     createDiv.id = textID;
-    createDiv.ondragstart = function (e) {
+    createDiv.ondragstart = function (e: any) {
       const data = {
         type: "text",
         text: e.target.innerText.replace("X\n", ""),
@@ -162,7 +165,8 @@ function onDrop(evt) {
       tag.style.opacity = 1;
     };
     createDeleteButton.onclick = function () {
-      document.getElementById(textID).remove();
+      const tagElementId: any = document.getElementById(textID);
+      tagElementId.remove();
       localStorage.setItem("canvas", canvas.innerHTML);
     };
     createDeleteButton.style.top = "-2rem";

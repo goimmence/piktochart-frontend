@@ -7,7 +7,7 @@
   </div>
 </template>
 
-<script setup>
-import SideBar from "../SideBar/SideBar.vue";
+<script setup lang="ts">
+import SideBar from "../sideBar/SideBar.vue";
 import Container from "../canvas/CanvasContainer.vue";
 </script>

@@ -8,7 +8,7 @@
     <div className="assets w-100 mt-5">
       <h3>Assets</h3>
       <hr />
-      <addText title="Add Text" submitButtonTitle="Submit" />
+      <AddText title="Add Text" submitButtonTitle="Submit" />
       <ImagesList />
     </div>
   </div>
@@ -20,8 +20,8 @@
 }
 </style>
 
-<script setup>
+<script setup lang="ts">
 import FileUpload from "../form/fileUpload/FileUpload.vue";
-import addText from "../form/addText/addText.vue";
+import AddText from "../form/addText/AddText.vue";
 import ImagesList from "../imagesList/ImagesList.vue";
 </script>

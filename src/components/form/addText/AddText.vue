@@ -17,11 +17,12 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { canvas_Text_Tag } from "../../../config/config";
 import { startDrag } from "../../../helper/helper";
+import { defineComponent } from "vue";
 
-export default {
+export default defineComponent({
   props: {
     title: {
       type: String,
@@ -39,11 +40,11 @@ export default {
   },
   methods: {
     submit() {
-      const canvas = document.getElementById("canvas-div");
-      const tag = document.createElement(canvas_Text_Tag);
-      const text = document.createTextNode(this.text);
-      const createDiv = document.createElement("div");
-      const createDeleteButton = document.createElement("button");
+      const canvas: any = document.getElementById("canvas-div");
+      const tag: any = document.createElement(canvas_Text_Tag);
+      const text: any = document.createTextNode(this.text);
+      const createDiv: any = document.createElement("div");
+      const createDeleteButton: any = document.createElement("button");
       createDeleteButton.innerText = "X";
       createDeleteButton.className = "btn btn-danger";
       createDeleteButton.style.position = "absolute";
@@ -56,13 +57,14 @@ export default {
       createDiv.style.width = "fit-content";
       createDiv.style.minWidth = "150px";
       createDeleteButton.onclick = function () {
-        document.getElementById(tag.id).remove();
+        const tagElementId: any = document.getElementById(tag.id);
+        tagElementId.remove();
         localStorage.setItem("canvas", canvas.innerHTML);
       };
       createDiv.id = ((Date.now() / 1000) | 0) + "-text";
       tag.id = ((Date.now() / 1000) | 0) + "-text";
       tag.draggable = true;
-      tag.ondragstart = function (e) {
+      tag.ondragstart = function (e: any) {
         const data = {
           type: "text",
           id: e.target.id,
@@ -81,12 +83,12 @@ export default {
       createDiv.appendChild(tag);
       canvas.appendChild(createDiv);
       localStorage.setItem("canvas", canvas.innerHTML);
-      this.$refs.text.value = "";
+      (this.$refs.text as HTMLInputElement).value = "";
       this.text = "";
     },
     handleChange() {
-      this.text = this.$refs.text.value;
+      this.text = (this.$refs.text as HTMLInputElement).value;
     },
   },
-};
+});
 </script>

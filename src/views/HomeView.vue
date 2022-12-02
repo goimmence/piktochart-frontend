@@ -4,6 +4,6 @@
   </main>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import HomeLayout from "../components/layout/HomeLayout.vue";
 </script>

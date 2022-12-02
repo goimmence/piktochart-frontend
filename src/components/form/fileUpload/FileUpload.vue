@@ -29,9 +29,11 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from "vue";
 import { useImagesStore } from "../../../stores/images";
-export default {
+
+export default defineComponent({
   props: {
     formTitle: {
       type: String,
@@ -48,19 +50,19 @@ export default {
   },
   data() {
     return {
-      file: "",
+      file: "" as any,
     };
   },
   methods: {
     submitFile() {
       const store = useImagesStore();
-      let formData = new FormData();
+      let formData: any = new FormData();
       formData.append("upload", this.file);
       store.postImages(formData);
     },
     handleFileUpload() {
-      this.file = this.$refs.file.files[0];
+      this.file = (this.$refs.file as HTMLInputElement).files?.[0];
     },
   },
-};
+});
 </script>
